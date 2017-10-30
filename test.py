@@ -19,18 +19,37 @@ t = np.zeros(n)
 for k in range(0,n):
     t[k] = te*k
 
-print(len(t))
-print(n)
 
-plot(t,data)
+
+"""
+plot(t,data)   #trace le signal discretisé
 xlabel("t (s)")
 ylabel("amplitude")
+show()
+"""
+
+#remarque : d'après ce que j'ai compris, data est une liste de 2-uplets représentants chacun l'information sur les deux pistes G et D droite à un instant donné. J'essaye ici de les extraire
+"""
+L = []
+R = []
+for i in range(n) :
+    L.append(data[i][0])
+    R.append(data[i][0])
+
+plot(t,L)
+show()   #ca marche
+"""
+
+
+
+
 
 
 """
 Analyse spectrale par transformation de Fourrier
 """
 
+"""
 def tracerSpectre(data,rate,debut,duree):
     start = int(debut*rate)
     stop = int((debut+duree)*rate)
@@ -44,10 +63,24 @@ def tracerSpectre(data,rate,debut,duree):
     xlabel('f (Hz)')
     ylabel('A')
     axis([0,0.5*rate,0,1])
+"""
 
 
-
+"""
 figure(figsize=(12,4))
 tracerSpectre(data,rate,0.0,duree)
 
 show()
+"""
+
+
+def corr(L,M,n) :  #les deux listes doivent avoir la même taille n ! Cette fonction donne la somme des ecarts en valeur absolue entre L[i] et M[j]
+    ecart = 0
+    for i in range(n) :
+        ecart += abs(L[i]-M[i])
+    return ecart
+
+L = [0,0,0,0]
+M = [1,0,3,-1]
+
+print(corr(L,M,4))   #petit test, ca fonctionne
