@@ -10,10 +10,10 @@ from list import *
 Ouverture du fichier .wav, représentation temporelle
 """
 
-fe,data = wave.read('loop_batterie.wav')   #rate = frequence d'échantillonage, déjà intégrée dans le fichier .wav
+fe,data = wave.read('booty_swing.wav')   #rate = frequence d'échantillonage, déjà intégrée dans le fichier .wav
 n = len(data)                #nombre d'échantillons
 duree = 1.0*n/fe
-print(n)
+
 
 
 te = 1.0/fe
@@ -40,17 +40,27 @@ for i in range(n) :
 
 
 
-"""
-plot(t,L)
-show()   #ca marche
-"""
+
+
 
 L_comp,new_fe = compress(L,fe,10)
 
-E = extract(L_comp,new_fe,3)    #extrait de la 2s à partir du milieu de la piste gauche
+E = extract(L_comp,new_fe,2)    #extrait de la 2s à partir du milieu de la piste gauche
+
+M = max(E)
 
 
 
-scores = scores(E)[500:]
+filter_E =[]
 
-print(min_index(scores))
+for i in E :
+    if i > 0.2*M :
+        filter_E.append(i)
+    else :
+        filter_E.append(0)   #idée : si un échantillon n'est pas significatif, on le met à 0
+
+
+
+scores = scores(filter_E)[500:]
+
+print(60*new_fe/(min_index(scores)+500))     #est censé donner le tempo
