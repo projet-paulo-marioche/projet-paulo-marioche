@@ -4,7 +4,7 @@ fichier de définition de fonctions génériques applicables sur des listes
 
 
 
-L = [1,3,4,3,5,6,3,4]
+L = [1,3,4,3,5,6,-2,3,4]
 
 
 
@@ -34,4 +34,20 @@ def scores(L) :
         liste_scores.append(dist(half(L),offset(L,i)))
     return liste_scores
 
-print(scores(L))
+
+def extract(L,fe,t) : #permet d'extraire un échantillon de durée t secondes à partir du milieu d'un morceau échantillonné à la fréquence fe
+    n = len(L)
+    half = int(n/2)
+    E = L[half:half+int(fe*t)]
+    return E
+
+def compress(L,fe,k) :   #compresse k fois une liste de fréquence d'échantillonage fe en prélevant 1 échantillon sur k
+    comp =[]
+    for i in range(int(len(L)/k)) :
+        comp.append(L[k*i])
+    return comp,fe/k      #retourn la liste compressee et la nouvelle fréquence d'échantillonnage
+
+def min_index(L) :
+    return L.index(min(L))
+
+print(L.index(3))
