@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.pyplot import *
 import scipy.io.wavfile as wave
 from numpy.fft import fft
-
+from list import *
 
 
 """
