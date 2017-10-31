@@ -10,7 +10,7 @@ from list import *
 Ouverture du fichier .wav, représentation temporelle
 """
 
-fe,data = wave.read('booty_swing.wav')   #rate = frequence d'échantillonage, déjà intégrée dans le fichier .wav
+fe,data = wave.read('loop_batterie.wav')   #fe = frequence d'échantillonage, déjà intégrée dans le fichier .wav
 n = len(data)                #nombre d'échantillons
 duree = 1.0*n/fe
 
@@ -61,6 +61,17 @@ for i in E :
 
 
 
-scores = scores(filter_E)[500:]
+scores = scores(filter_E)[500:]   #on enlève les premiers termes pour ne pas que la distance minimale soit donné par les petits décalages du début
 
-print(60*new_fe/(min_index(scores)+500))     #est censé donner le tempo
+tempo = 60.0*new_fe/(min_index(scores)+500)     #est censé donner le tempo
+
+if tempo > 60 and tempo <130 :                  # la fin du script permet de donner un multpiple du tempo compris entre 60 et 120 bpm
+    print(tempo)
+elif tempo < 60 :
+    while tempo <60 :
+        tempo *= 2
+    print(tempo)
+else :
+    while tempo > 130 :
+        tempo = tempo/2
+    print(tempo)
