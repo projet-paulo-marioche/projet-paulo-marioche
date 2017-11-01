@@ -15,7 +15,7 @@ fe,data = wave.read('loop_batterie.wav')   #fe = frequence d'échantillonage, d�
 n = len(data)                #nombre d'échantillons
 duree = 1.0*n/fe
 
-
+print(fe)
 
 te = 1.0/fe
 t = np.zeros(n)
@@ -40,20 +40,23 @@ for i in range(n) :
     R.append(data[i][0])
 
 
-L_comp,new_fe = compress(L,fe,10)
+L_comp,new_fe = compress(L,fe,100)
 
-E = extract(L_comp,new_fe,2)    #extrait de la 2s à partir du milieu de la piste gauche
-
-M = max(E)
+E = extract(L_comp,new_fe,10)    #extrait de la 2s à partir du milieu de la piste gauche
 
 
 
-filter_E = filter(E,0.2)
+
+
+filter_E = filter(E,0.9)
 
 
 
-scores = scores(filter_E)[500:]   #on enlève les premiers termes pour ne pas que la distance minimale soit donné par les petits décalages du début
+
+scores = scores(filter_E)[500:]   #on enlève les premiers termes pour ne pas que la distance minimale soit donné par les faibles décalages du début
 
 tempo = 60.0*new_fe/(min_index(scores)+500)     #est censé donner le tempo
+
+
 
 print(right_tempo(tempo))  #permet de donner un multiple du tempo compris entre 60 et 120 bpm

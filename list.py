@@ -2,7 +2,7 @@
 fichier de définition de fonctions génériques applicables sur des listes
 """
 
-
+import numpy as np
 
 L = [1,3,4,3,5,6,-2,3,4]
 
@@ -71,3 +71,21 @@ def right_tempo(tempo) :
         while tempo > 140 :
             tempo = tempo/2
         return tempo
+
+def relevant_samples(L) :      #donne les indices des echantillons significatifs de la première moitié de L
+    samples = []
+    for i in range(int(len(L)/2)) :
+        if L[i] != 0 :
+            samples.append(i)
+    return samples
+
+def relevant_scores(L) :
+    list_scores = []
+    for i in relevant_samples(L) :
+        for j in relevant_samples(L) :
+            d = dist(offset(L,i),offset(L,j))
+            if d == 0 :
+                list_scores.append(np.inf)
+            else :
+                list_scores.append(d)
+    return list_scores
