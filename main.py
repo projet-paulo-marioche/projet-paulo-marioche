@@ -9,6 +9,7 @@ from list import *
 """
 Ouverture du fichier .wav, représentation temporelle
 """
+tolerance = 5
 
 fe,data = wave.read('loop_batterie.wav')   #fe = frequence d'échantillonage, déjà intégrée dans le fichier .wav
 n = len(data)                #nombre d'échantillons
@@ -39,10 +40,6 @@ for i in range(n) :
     R.append(data[i][0])
 
 
-
-
-
-
 L_comp,new_fe = compress(L,fe,10)
 
 E = extract(L_comp,new_fe,2)    #extrait de la 2s à partir du milieu de la piste gauche
@@ -51,13 +48,7 @@ M = max(E)
 
 
 
-filter_E =[]
-
-for i in E :
-    if i > 0.2*M :
-        filter_E.append(i)
-    else :
-        filter_E.append(0)   #idée : si un échantillon n'est pas significatif, on le met à 0
+filter_E = filter(E,0.2)
 
 
 
@@ -65,13 +56,4 @@ scores = scores(filter_E)[500:]   #on enlève les premiers termes pour ne pas qu
 
 tempo = 60.0*new_fe/(min_index(scores)+500)     #est censé donner le tempo
 
-if tempo > 60 and tempo <130 :                  # la fin du script permet de donner un multpiple du tempo compris entre 60 et 120 bpm
-    print(tempo)
-elif tempo < 60 :
-    while tempo <60 :
-        tempo *= 2
-    print(tempo)
-else :
-    while tempo > 130 :
-        tempo = tempo/2
-    print(tempo)
+print(right_tempo(tempo))  #permet de donner un multiple du tempo compris entre 60 et 120 bpm

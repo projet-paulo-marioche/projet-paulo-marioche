@@ -50,4 +50,24 @@ def compress(L,fe,k) :   #compresse k fois une liste de fréquence d'échantillo
 def min_index(L) :
     return L.index(min(L))
 
-print(L.index(3))
+def filter(L,treshold) :
+    M = max(L)
+    filter_L = []
+    for i in L :
+        if i > treshold*M :
+            filter_L.append(i)
+        else :
+            filter_L.append(0)   #idée : si un échantillon n'est pas significatif, on le met à 0
+    return filter_L
+
+def right_tempo(tempo) :
+    if tempo > 70 and tempo <140 :                  # la fin du script permet de donner un multpiple du tempo compris entre 60 et 120 bpm
+        return tempo
+    elif tempo < 70 :
+        while tempo < 70 :
+            tempo *= 2
+        return tempo
+    else :
+        while tempo > 140 :
+            tempo = tempo/2
+        return tempo
